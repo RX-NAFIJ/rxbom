@@ -1,0 +1,37 @@
+<?php
+$phn = $_REQUEST["phone"]; // Example: 01997406002
+
+// Medeasy requires +880 before number
+$final_phone = "+88" . $phn;
+
+// Final URL
+$url = "https://api.medeasy.health/api/send-otp/{$final_phone}/";
+
+// Headers from your curl request
+$headers = array(
+    "accept: application/json",
+    "accept-language: en-US,en;q=0.9,ru;q=0.8,zh-TW;q=0.7,zh;q=0.6",
+    "cache-control: no-cache",
+    "origin: https://medeasy.health",
+    "pragma: no-cache",
+    "priority: u=1, i",
+    "referer: https://medeasy.health/",
+    "sec-ch-ua: \"Google Chrome\";v=\"143\", \"Chromium\";v=\"143\", \"Not A(Brand\";v=\"24\"",
+    "sec-ch-ua-mobile: ?0",
+    "sec-ch-ua-platform: \"Windows\"",
+    "sec-fetch-dest: empty",
+    "sec-fetch-mode: cors",
+    "sec-fetch-site: same-site",
+    "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"
+);
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$response = curl_exec($ch);
+curl_close($ch);
+
+echo "Medeasy OTP Response: " . $response;
+?>
